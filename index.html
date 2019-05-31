@@ -1,0 +1,336 @@
+<html>
+<title>
+    Practica 3 UF4 JQUERY
+</title>
+
+<head>
+    <!-- CSS -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand">Calderas S.L</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Menu -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-white boton-login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white boton-compra">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white boton-entrega">Entrega</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white boton-stock">Stock</a>
+                </li>
+            </ul>
+    </nav>
+
+    <div id="menu-login" class="container">
+        <!-- Login -->
+        <br>
+        <h1>Login</h1>
+
+        <button type="button" class="btn btn-danger" id="boton-cerrar-aplicacion"
+            onclick="javascript:window.location.reload();">Cerrar sesión</button>
+        <div id="menu-login-form">
+
+            <p class="text-xl-left">-Inicia session con tu cuenta</p>
+            <p class="text-xl-left">Email: <strong>admin@email.com</strong> Password: <strong>admin1234</strong>
+                (Usuario con todos los permisos)</p>
+            <p class="text-xl-left">Email: <strong>alumno@email.cat</strong> Password: <strong>alumno1234</strong>
+                (Usuario solo con permisos de lectura)</p>
+            <form id="form-login">
+                <div class="form-group">
+                    <label>Email address</label>
+                    <input type="text" class="form-control login-email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="text" class="form-control login-password" placeholder="Contraseña">
+                </div>
+                <button type="button" class="btn btn-success boton-iniciar-aplicacion" disabled>Iniciar sesión</button>
+                <button type="button" class="btn btn-primary submit-login" disabled>Submit</button>
+                <button type="button" class="btn btn-danger boton-cerrar-aplicacion"
+                    onclick="javascript:window.location.reload();">Cerrar sesión</button>
+            </form>
+        </div>
+
+        <br>
+        <br>
+        <div id="duplicar-login">
+            <form class="form-inline">
+
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="text" class="form-control mostrar-email-0" placeholder="Email" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña:</label>
+                    <input type="text" class="form-control mostrar-password-0" placeholder="Contraseña" disabled>
+                </div>
+                <button type="button" class="btn btn-success boton-guardar-login"
+                    onclick="guardar_cambios_login(value)">Guardar cambios</button>
+                <button type="button" class="btn btn-warning boton-modificar-login"
+                    onclick="modificar_login(value)">Modificar</button>
+                <button type="button" class="btn btn-danger boton-eliminar-login"
+                    onclick="eliminar_login(value)">Eliminar</button>
+            </form>
+
+        </div>
+        <div id="mostrar-datos">
+
+        </div>
+
+        <div id="pagination-login">
+
+            <!-- Pagination -->
+            <nav>
+                <ol class="pagination" id="pagin_1">
+                    <li class="page-item text-primary current_1"><a class="page-link">1</a></li>
+                    <li class="page-item text-primary"><a class="page-link">2</a></li>
+                    <li class="page-item text-primary"><a class="page-link">3</a></li>
+                    <li class="page-item text-primary"><a class="page-link">4</a></li>
+                    <li class="page-item text-primary"><a class="page-link">5</a></li>
+                    <li class="page-item text-primary"><a class="page-link">6</a></li>
+                    <li class="page-item text-primary"><a class="page-link">7</a></li>
+                    <li class="page-item text-primary"><a class="page-link">8</a></li>
+                    <li class="page-item text-primary"><a class="page-link">9</a></li>
+                    <li class="page-item text-primary"><a class="page-link">10</a></li>
+                </ol>
+            </nav>
+
+        </div>
+    </div>
+
+    <div id="menu-compra" class="container">
+        <!-- Productos -->
+        <br>
+        <h1>Productos</h1>
+        <br>
+        <div id="menu-compra-form">
+            <p class="text-xl-left">-Escoja el producto que deseas comprar.</p>
+            <p class="text-xl-left">-(PRVOVISIONAL) Debido por tener productos limitados solo se podra comprar un
+                producto
+                por cliente.</p>
+            <form id="form-compra">
+                <select class="browser-default custom-select form-group compra-producto" name="select-producto"
+                    id="select-producto">
+                    <option selected disabled>Selecciona un producto</option>
+                </select>
+                <div class="form-group">
+                    <label>Precio final:</label>
+                    <input type="number" value="" class="form-control compra-precio" disabled>
+                </div>
+                <button type="button" class="btn btn-primary submit-compra" disabled>Submit</button>
+                <button type="button" class="btn btn-success boton-guardar-productos">Guardar
+                    cambios</button>
+                <button type="button" class="btn btn-secondary boton-crear-productos" disabled>Crear</button>
+                <button type="button" class="btn btn-warning boton-modificar-productos" disabled>Modificar</button>
+                <button type="button" class="btn btn-danger boton-eliminar-productos" disabled>Eliminar</button>
+                <button type="button" class="btn btn-dark boton-listar-productos">Listar productos</button>
+            </form>
+
+            <div id="duplicar-productos">
+                <form>
+                    <div class="row">
+                        <div class="col">
+                            <label>Producto:</label>
+                            <input type="text" class="form-control mostrar-producto-0" disabled>
+                        </div>
+                        <div class="col">
+                            <label>Precio final:</label>
+                            <input type="number" class="form-control mostrar-precio-0" disabled>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="mostrar-datos-productos">
+
+            </div>
+
+            <!-- Pagination -->
+            <nav>
+                <ol class="pagination" id="pagin_3">
+                    <li class="page-item text-primary current_3"><a class="page-link">1</a></li>
+                    <li class="page-item text-primary"><a class="page-link">2</a></li>
+                    <li class="page-item text-primary"><a class="page-link">3</a></li>
+                    <li class="page-item text-primary"><a class="page-link">4</a></li>
+                    <li class="page-item text-primary"><a class="page-link">5</a></li>
+                    <li class="page-item text-primary"><a class="page-link">6</a></li>
+                    <li class="page-item text-primary"><a class="page-link">7</a></li>
+                    <li class="page-item text-primary"><a class="page-link">8</a></li>
+                    <li class="page-item text-primary"><a class="page-link">9</a></li>
+                    <li class="page-item text-primary"><a class="page-link">10</a></li>
+                </ol>
+            </nav>
+
+        </div>
+    </div>
+
+    <div id="menu-entrega" class="container">
+        <!-- Entrega -->
+        <br>
+        <h1>Entrega</h1>
+        <br>
+        <div id="menu-entrega-form">
+            <p class="text-xl-left">-Introduzca su numero de telefono para mantenerle informado. (Debe contener 9
+                numeros si
+                o si)</p>
+            <p class="text-xl-left">-Escoja un rango de fechas para saber cuando quieres que llege el producto.</p>
+            <form id="form-entrega">
+                <div class="form-group">
+                    <label>Telefono</label>
+                    <input type="number" class="form-control entrega-telefono" placeholder="Telefono"
+                        data-bind="value:replyNumber" maxlength="9">
+                </div>
+                <div class="form-group">
+                    <label>Fecha Inicio</label>
+                    <input type="date" class="form-control entrega-fecha1">
+                </div>
+                <div class="form-group">
+                    <label>Fecha Final</label>
+                    <input type="date" class="form-control entrega-fecha2">
+                </div>
+                <button type="button" class="btn btn-primary submit-entrega" disabled>Submit</button>
+            </form>
+
+        </div>
+
+        <div id="duplicar-entrega">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label>Telefono</label>
+                    <input type="number" class="form-control mostrar-telefono-0" placeholder="Telefono"
+                        data-bind="value:replyNumber" maxlength="9" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Fecha Inicio</label>
+                    <input type="date" class="form-control mostrar-fecha-inicio-0" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Fecha Final</label>
+                    <input type="date" class="form-control mostrar-fecha-final-0" disabled>
+                </div>
+                <button type="button" class="btn btn-success boton-guardar-entrega"
+                    onclick="guardar_cambios_entrega(value)">Guardar</button>
+                <button type="button" class="btn btn-warning boton-modificar-entrega"
+                    onclick="modificar_entrega(value)">Modificar</button>
+                <button type="button" class="btn btn-danger boton-eliminar-entrega"
+                    onclick="eliminar_entrega(value)">Eliminar</button>
+            </form>
+        </div>
+        <div id="mostrar-datos-entrega">
+
+        </div>
+
+        <div id="pagination_entrega">
+
+            <!-- Pagination -->
+            <nav>
+                <ol class="pagination" id="pagin_2">
+                    <li class="page-item text-primary current_2"><a class="page-link">1</a></li>
+                    <li class="page-item text-primary"><a class="page-link">2</a></li>
+                    <li class="page-item text-primary"><a class="page-link">3</a></li>
+                    <li class="page-item text-primary"><a class="page-link">4</a></li>
+                    <li class="page-item text-primary"><a class="page-link">5</a></li>
+                    <li class="page-item text-primary"><a class="page-link">6</a></li>
+                    <li class="page-item text-primary"><a class="page-link">7</a></li>
+                    <li class="page-item text-primary"><a class="page-link">8</a></li>
+                    <li class="page-item text-primary"><a class="page-link">9</a></li>
+                    <li class="page-item text-primary"><a class="page-link">10</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div id="menu-stock" class="container">
+        <!-- Stock -->
+        <br>
+        <h1>Stock</h1>
+        <br>
+        <div id="menu-stock-form">
+            <p class="text-xl-left">-Saber cuantos productos quedan disponibles</p>
+            <form id="form-stock">
+                <select class="browser-default custom-select form-group stock-producto" id="select-stock-producto">
+                    <option selected disabled>Selecciona un producto</option>
+                </select>
+                <div class="form-group">
+                    <label>Unidades:</label>
+                    <input type="number" value="" class="form-control stock-unidades" disabled>
+                </div>
+                <button type="button" class="btn btn-primary submit-stock" disabled>Submit</button>
+                <button type="button" class="btn btn-success boton-guardar-stock">Guardar
+                    cambios</button>
+                <button type="button" class="btn btn-secondary boton-crear-stock" disabled>Crear</button>
+                <button type="button" class="btn btn-warning boton-modificar-stock" disabled>Modificar</button>
+                <button type="button" class="btn btn-danger boton-eliminar-stock" disabled>Eliminar</button>
+                <button type="button" class="btn btn-dark boton-listar-stock">Listar Stock</button>
+            </form>
+
+            <div id="duplicar-stock">
+                <form>
+                    <div class="row">
+                        <div class="col">
+                            <label>Producto:</label>
+                            <input type="text" class="form-control mostrar-producto-stock-0" disabled>
+                        </div>
+                        <div class="col">
+                            <label>Unidades:</label>
+                            <input type="number" class="form-control mostrar-unidades-0" disabled>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="mostrar-datos-stock">
+
+            </div>
+
+            <!-- Pagination -->
+            <nav>
+                <ol class="pagination" id="pagin_4">
+                    <li class="page-item text-primary current_4"><a class="page-link">1</a></li>
+                    <li class="page-item text-primary"><a class="page-link">2</a></li>
+                    <li class="page-item text-primary"><a class="page-link">3</a></li>
+                    <li class="page-item text-primary"><a class="page-link">4</a></li>
+                    <li class="page-item text-primary"><a class="page-link">5</a></li>
+                    <li class="page-item text-primary"><a class="page-link">6</a></li>
+                    <li class="page-item text-primary"><a class="page-link">7</a></li>
+                    <li class="page-item text-primary"><a class="page-link">8</a></li>
+                    <li class="page-item text-primary"><a class="page-link">9</a></li>
+                    <li class="page-item text-primary"><a class="page-link">10</a></li>
+                </ol>
+            </nav>
+        </div>
+
+    </div>
+
+    </div>
+
+</body>
+
+
+<!-- Javascript -->
+<script type="text/javascript" src="Jquery/app.js"></script>
+<script type="text/javascript" src="Jquery/ajax.js"></script>
+<script type="text/javascript" src="Jquery/pagination_login.js"></script>
+<script type="text/javascript" src="Jquery/pagination_productos.js"></script>
+<script type="text/javascript" src="Jquery/pagination_entrega.js"></script>
+<script type="text/javascript" src="Jquery/pagination_stock.js"></script>
+
+</html>

@@ -1,0 +1,196 @@
+#menu-compra {
+    display: none;
+}
+
+#menu-entrega {
+    display: none;
+}
+
+#menu-stock {
+    display: none;
+}
+
+.boton-login {
+    CURSOR: hand;
+}
+
+.boton-compra {
+    CURSOR: hand;
+}
+
+.boton-entrega {
+    CURSOR: hand;
+}
+
+.boton-stock {
+    CURSOR: hand;
+}
+
+.mostrar-email-0 {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.mostrar-password-0 {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.boton-eliminar-login {
+    margin-left: 15px;
+}
+
+.boton-guardar-login {
+    margin-right: 15px;
+}
+
+.mostrar-telefono-0 {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.mostrar-fecha-inicio-0 {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.mostrar-fecha-final-0 {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.boton-eliminar-entrega {
+    margin-left: 5px;
+}
+
+.boton-guardar-entrega {
+    margin-right: 5px;
+}
+
+.boton-iniciar-aplicacion {
+    margin-right: 15px;
+}
+
+#menu-login-form .submit-login {
+    display: none;
+}
+
+.form-inline .boton-eliminar-login {
+    display: none;
+}
+
+.form-inline .boton-modificar-login {
+    display: none;
+}
+
+#form-compra .submit-compra {
+    display: none;
+}
+
+#form-compra .boton-crear-productos {
+    display: none;
+}
+
+#form-compra .boton-modificar-productos {
+    display: none;
+}
+
+#form-compra .boton-eliminar-productos {
+    display: none;
+}
+
+#form-compra .boton-listar-productos {
+    display: none;
+}
+
+#menu-entrega-form .submit-entrega {
+    display: none;
+}
+
+.form-inline .boton-modificar-entrega {
+    display: none;
+}
+
+.form-inline .boton-eliminar-entrega {
+    display: none;
+}
+
+#form-stock .submit-stock {
+    display: none;
+}
+
+#form-stock .boton-crear-stock {
+    display: none;
+}
+
+#form-stock .boton-modificar-stock {
+    display: none;
+}
+
+#form-stock .boton-eliminar-stock {
+    display: none;
+}
+
+#form-stock .boton-listar-stock {
+    display: none;
+}
+
+#menu-login-form .boton-cerrar-aplicacion {
+    display: none;
+}
+
+#menu-compra-form {
+    display: none;
+}
+
+#pagination_entrega {
+    display: none;
+}
+
+#menu-entrega-form {
+    display: none;
+}
+
+#menu-stock-form {
+    display: none;
+}
+
+#pagination-login {
+    display: none;
+}
+
+#boton-cerrar-aplicacion {
+    display: none;
+}
+
+#duplicar-login {
+    display: none;
+}
+
+.form-inline .boton-guardar-login {
+    display: none;
+}
+
+#form-compra .boton-guardar-productos {
+    display: none;
+}
+
+#duplicar-productos {
+    display: none;
+}
+
+#duplicar-entrega {
+    display: none;
+}
+
+.form-inline .boton-guardar-entrega {
+    display: none;
+}
+
+#menu-stock-form .boton-guardar-stock {
+    display: none;
+}
+
+#duplicar-stock {
+    display: none;
+}

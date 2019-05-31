@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: ajax.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: ajax.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name listar_login_bd
+ * @description Función para listar los usuarios de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function listar_login_bd() {
+    ajax_login("PHP/usuarios/listar.php", "")
+        .done(function (info) {
+
+            var $login = JSON.parse(info);
+
+            for (var i in $login.data) {
+                var $email = $login.data[i].email;
+                var $password = $login.data[i].password;
+
+                /*Llamar a la funcion submit_login_bd(i, $email, $password) para mostrar los usuarios automaticamente*/
+                submit_login_bd(i, $email, $password)
+            }
+
+        });
+} // Final función listar_login_bd()
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name ajax_login
+ * @description Función para obtener los valores de los usuarios de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function ajax_login(url, data) {
+    var ajax_login = $.ajax({
+        "method": "POST",
+        "url": url,
+        "data": data
+    })
+    return ajax_login;
+} // Final función ajax_login(url, data)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name listar_productos_bd
+ * @description Función para listar los productos de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function listar_productos_bd() {
+    ajax_producto("PHP/productos/listar.php", "")
+        .done(function (info) {
+
+            var $productos = JSON.parse(info);
+
+            for (var i in $productos.data) {
+                var $producto = $productos.data[i].producto;
+                var $precio = $productos.data[i].precio;
+
+                $("#select-producto").append(new Option($producto, $precio));
+
+            }
+
+            /*Llamar a la función listar_productos() para mostrar los productos por pantalla*/
+            listar_productos()
+
+        });
+} // Final función listar_productos_bd()
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name ajax_producto
+ * @description Función para obtener los valores de los productos de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function ajax_producto(url, data) {
+    var ajax_producto = $.ajax({
+        "method": "POST",
+        "url": url,
+        "data": data
+    })
+    return ajax_producto;
+} // Final función ajax_producto(url, data)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name listar_entrega_bd
+ * @description Función para listar las entregas de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function listar_entrega_bd() {
+    ajax_producto("PHP/entrega/listar.php", "")
+        .done(function (info) {
+
+            var $entrega = JSON.parse(info);
+
+            for (var i in $entrega.data) {
+                var $telefono = $entrega.data[i].telefono;
+                var $fecha_inicio = $entrega.data[i].fecha_inicio;
+                var $fecha_final = $entrega.data[i].fecha_final;
+
+                /*Llamar a la funcion submit_entrega_bd(i, $telefono, $fecha_inicio, $fecha_final) para mostrar las entregas automaticamente*/
+                submit_entrega_bd(i, $telefono, $fecha_inicio, $fecha_final)
+            }
+
+        });
+} // Final función listar_entrega_bd()
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name ajax_entrega
+ * @description Función para obtener los valores de las entregas de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function ajax_entrega(url, data) {
+    var ajax_entrega = $.ajax({
+        "method": "POST",
+        "url": url,
+        "data": data
+    })
+    return ajax_entrega;
+} // Final función ajax_entrega(url, data)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name listar_stock_bd
+ * @description Función para listar los stocks de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function listar_stock_bd() {
+    ajax_stock("PHP/stock/listar.php", "")
+        .done(function (info) {
+
+            var $stock = JSON.parse(info);
+
+            for (var i in $stock.data) {
+                var $producto = $stock.data[i].producto;
+                var $unidades = $stock.data[i].unidades;
+
+                $("#select-stock-producto").append(new Option($producto, $unidades));
+
+            }
+
+            /*Llamar a la función listar_stock() para mostrar los productos por pantalla*/
+            listar_stock()
+
+        });
+} // Final función listar_stock_bd()
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name ajax_stock
+ * @description Función para obtener los valores de los stocks de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function ajax_stock(url, data) {
+    var ajax_stock = $.ajax({
+        "method": "POST",
+        "url": url,
+        "data": data
+    })
+    return ajax_stock;
+} // Final función ajax_stock(url, data)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name iniciar_aplicacion
+ * @description Función para iniciar la aplicacion con los permisos correspondientes del usuario.
+ * @param email valor del email del menu login.
+ * @param password valor de la contraseña del menu login.
+ */
+function iniciar_aplicacion(email, password) {
+
+    var $email = email;
+    var $password = password;
+
+    ajax_iniciar_aplicacion("PHP/inicar_aplicacion.php", "")
+        .done(function (info) {
+            var $login = JSON.parse(info);
+            var $user = 0;
+
+            for (var i in $login.data) {
+
+                if ($login.data[i].email == $email &amp;&amp; $login.data[i].password == $password &amp;&amp; $login.data[i].admin > 0) {
+                    /*Para mostrar todos los botones*/
+                    $(".submit-login").show();
+                    $(".boton-modificar-login").show();
+                    $(".boton-eliminar-login").show();
+                    $(".submit-compra").show();
+                    $(".boton-crear-productos").show();
+                    $(".boton-modificar-productos").show();
+                    $(".boton-eliminar-productos").show();
+                    $(".boton-listar-productos").show();
+                    $(".submit-entrega").show();
+                    $(".boton-modificar-entrega").show();
+                    $(".boton-eliminar-entrega").show();
+                    $(".submit-stock").show();
+                    $(".boton-crear-stock").show();
+                    $(".boton-modificar-stock").show();
+                    $(".boton-eliminar-stock").show();
+                    $(".boton-listar-stock").show();
+                    $(".boton-cerrar-aplicacion").show();
+                    $("#menu-compra-form").show();
+                    $("#pagination-login").show();
+                    $("#pagination_entrega").show();
+                    $("#menu-entrega-form").show();
+                    $("#menu-stock-form").show();
+                    $(".boton-cerrar-aplicacion").text("Cerrar sesión de la cuenta: " + $email);
+                    $(".boton-iniciar-aplicacion").removeAttr("style").hide();
+
+                    /*Reiniciar los valores de los campos del menu login.*/
+                    $('.login-email').val("");
+                    $('.login-password').val("");
+
+                    $user = 1;
+
+                    /*Llamar a las funciones listar_login_bd() listar_entrega_bd() para mostrar los usuarios y las entregas de la base de datos.*/
+                    listar_login_bd()
+                    listar_entrega_bd()
+                    menu_compra()
+                    break;
+                }
+
+                if ($login.data[i].email == $email &amp;&amp; $login.data[i].password == $password &amp;&amp; $login.data[i].admin &lt;= 0) {
+                    /*Para mostrar solo los botones de listar*/
+                    $(".boton-listar-productos").show();
+                    $(".boton-listar-stock").show();
+                    $(".boton-cerrar-aplicacion").show();
+                    $(".boton-cerrar-aplicacion").text("Cerrar sesión de la cuenta: " + $email);
+                    $(".boton-iniciar-aplicacion").removeAttr("style").hide();
+                    $("#menu-login-form").removeAttr("style").hide();
+                    $("#menu-entrega-form").removeAttr("style").hide();
+                    $("#menu-compra-form").show();
+                    $("#menu-stock-form").show();
+                    $("#pagination-login").show();
+                    $("#pagination_entrega").show();
+                    $(".boton-iniciar-aplicacion").removeAttr("style").hide();
+                    alert("efsa");
+                    $("#boton-cerrar-aplicacion").show();
+                    $("#boton-cerrar-aplicacion").text("Cerrar sesión de la cuenta: " + $email);
+
+                    /*Reiniciar los valores de los campos del menu login.*/
+                    $('.login-email').val("");
+                    $('.login-password').val("");
+
+                    $user = 1;
+
+                    /*Llamar a las funciones listar_login_bd() listar_entrega_bd() para mostrar los usuarios y las entregas de la base de datos.*/
+                    listar_login_bd()
+                    listar_entrega_bd()
+                    menu_compra()
+                    break;
+                }
+
+            } //Final del bucle for (var i in $login.data)
+
+            if ($user != 1) {
+                alert("El usuario o la contraseña que has introducido es incorrecto");
+            }
+
+        });
+
+} // Final función iniciar_aplicacion(email, password)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name ajax_iniciar_aplicacion
+ * @description Función para obtener los valores de los usuarios de la base de datos de la tabla login al iniciar la pagina.
+ * @param 
+ */
+function ajax_iniciar_aplicacion(url, data) {
+    var ajax_iniciar_aplicacion = $.ajax({
+        "method": "POST",
+        "url": url,
+        "data": data
+    })
+    return ajax_iniciar_aplicacion;
+} // Final función ajax_iniciar_aplicacion(url, data)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name insertar_login
+ * @description Función para insertar los usuarios de la base de datos.
+ * @param id valor de la id del menu login.
+ * @param email valor del email del menu login.
+ * @param password valor de la contraseña del menu login.
+ */
+function insertar_login(id, email, password) {
+    $id = id;
+    $email = email;
+    $password = password;
+
+    $.ajax({
+        type: 'POST',
+        url: 'PHP/usuarios/insertar.php',
+        data: ('email=' + $email + '&amp;id=' + $id + '&amp;password=' + $password),
+        success: function (respuesta) {
+            if (respuesta == 1) {
+                alert("El usuario con el correo " + $email + " se ha insertado correctamente en la base de datos");
+            } else {
+                alert("El usuario no se ha podido insertar en la base de datos");
+            }
+        }
+    });
+} // Final función insertar_login(id, email, password)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name modificar_login_bd
+ * @description Función para modificar los valores de los usuarios de la base de datos.
+ * @param email valor del telefono del menu login.
+ * @param password valor de la contraseña del menu login.
+ */
+function modificar_login_bd(id, email, password) {
+    $id = id;
+    $email = email;
+    $password = password;
+
+    $.ajax({
+        type: 'POST',
+        url: 'PHP/usuarios/modificar.php',
+        data: ('email=' + $email + '&amp;id=' + $id + '&amp;password=' + $password),
+        success: function (respuesta) {
+            if (respuesta == 1) {
+                alert("El usuario se ha actualizado correctamente en la base de datos");
+            } else {
+                alert("La usuario no se ha podido actualizar en la base de datos");
+            }
+        }
+    });
+} // Final función modificar_login_bd(id, email, password)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name eliminar_login_bd
+ * @description Función para eliminar los valores de los usuarios de la base de datos.
+ * @param id valor del id del menu login
+ */
+function eliminar_login_bd(id) {
+    $id = id;
+
+    $.ajax({
+        type: 'POST',
+        url: 'PHP/usuarios/eliminar.php',
+        data: ('id=' + $id),
+        success: function (respuesta) {
+            if (respuesta == 1) {
+                alert("El usuario se ha eliminado correctamente en la base de datos");
+            } else {
+                alert("El usuario no se ha podido eliminar en la base de datos");
+            }
+        }
+    });
+} // Final función eliminar_login_bd(id)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name insertar_producto
+ * @description Función para insertar los productos de la base de datos.
+ * @param producto valor del producto del menu productos
+ * @param precio valor del precio del menu productos
+ */
+function insertar_producto(producto, precio) {
+    $producto = producto;
+    $precio = precio;
+
+    $.ajax({
+        type: 'POST',
+        url: 'PHP/productos/insertar.php',
+        data: ('producto=' + $producto + '&amp;precio=' + $precio),
+        success: function (respuesta) {
+            if (respuesta == 1) {
+                alert("El producto " + $producto + " se ha insertado correctamente en la base de datos");
+            } else {
+                alert("El producto no se ha podido insertar en la base de datos");
+            }
+        }
+    });
+} // Final función insertar_producto(producto, precio)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name modificar_producto_bd
+ * @description Función para modificar los valores de los productos de la base de datos.
+ * @param producto valor del producto del menu productos
+ * @param precio valor del precio del menu productos
+ */
+function modificar_producto_bd(producto, precio) {
+    $producto = producto;
+    $precio = precio;
+
+    $.ajax({
+        type: 'POST',
+        url: 'PHP/productos/modificar.php',
+        data: ('producto=' + $producto + '&amp;precio=' + $precio),
+        success: function (respuesta) {
+            if (respuesta == 1) {
+                alert("El producto " + $producto + " se ha actualizado correctamente en la base de datos");
+            } else {
+                alert("El producto no se ha podido actualizar en la base de datos");
+            }
+        }
+    });
+} // Final función modificar_producto_bd(producto, precio)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name eliminar_producto_bd
+ * @description Función para eliminar los valores de los productos de la base de datos.
+ * @param producto valor del producto del menu productos
+ */
+function eliminar_producto_bd(producto) {
+    $producto = producto;
+
+    $.ajax({
+        type: 'POST',
+        url: 'PHP/productos/eliminar.php',
+        data: ('producto=' + $producto),
+        success: function (respuesta) {
+            if (respuesta == 1) {
+                alert("El producto " + $producto + " se ha eliminado correctamente en la base de datos");
+            } else {
+                alert("El producto no se ha podido eliminar en la base de datos");
+            }
+        }
+    });
+} // Final función eliminar_producto_bd(producto)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name insertar_entrega
+ * @description Función para insertar las entregas de la base de datos.
+ * @param id valor de la id del menu entrega.
+ * @param telefono valor del telefono del menu entrega.
+ * @param fecha_inicio valor de la fecha_inicio del menu entrega.
+ * @param fecha_final valor de la fecha_final del menu entrega.
+ */
+function insertar_entrega(id, telefono, fecha_inicio, fecha_final) {
+    $id = id;
+    $telefono = telefono;
+    $fecha_inicio = fecha_inicio;
+    $fecha_final = fecha_final;
+
+    $.ajax({
+        type: 'POST',
+        url: 'PHP/entrega/insertar.php',
+        data: ('telefono=' + $telefono + '&amp;id=' + $id + '&amp;fecha_inicio=' + $fecha_inicio + '&amp;fecha_final=' + $fecha_final),
+        success: function (respuesta) {
+            if (respuesta == 1) {
+                alert("La entrega con el telefono " + $telefono + " se ha insertado correctamente en la base de datos");
+            } else {
+                alert("La entrega no se ha podido insertar en la base de datos");
+            }
+        }
+    });
+} // Final función insertar_entrega(id, telefono, fecha_inicio, fecha_final)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name modificar_entrega_bd
+ * @description Función para modificar los valores de las entregas de la base de datos.
+ * @param telefono valor del telefono del menu entrega.
+ * @param fecha_inicio valor de la fecha_inicio del menu entrega.
+ * @param fecha_final valor de la fecha_final del menu entrega.
+ */
+function modificar_entrega_bd(id, telefono, fecha_inicio, fecha_final) {
+    $id = id;
+    $telefono = telefono;
+    $fecha_inicio = fecha_inicio;
+    $fecha_final = fecha_final;
+
+    $.ajax({
+        type: 'POST',
+        url: 'PHP/entrega/modificar.php',
+        data: ('telefono=' + $telefono + '&amp;id=' + $id + '&amp;fecha_inicio=' + $fecha_inicio + '&amp;fecha_final=' + $fecha_final),
+        success: function (respuesta) {
+            if (respuesta == 1) {
+                alert("La entrega se ha actualizado correctamente en la base de datos");
+            } else {
+                alert("La entrega no se ha podido actualizar en la base de datos");
+            }
+        }
+    });
+} // Final función modificar_entrega_bd(id, telefono, fecha_inicio, fecha_final)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name eliminar_entrega_bd
+ * @description Función para eliminar los valores de las entregas de la base de datos.
+ * @param id valor del id del menu entrega
+ */
+function eliminar_entrega_bd(id) {
+    $id = id;
+
+    $.ajax({
+        type: 'POST',
+        url: 'PHP/entrega/eliminar.php',
+        data: ('id=' + $id),
+        success: function (respuesta) {
+            if (respuesta == 1) {
+                alert("La entrega se ha eliminado correctamente en la base de datos");
+            } else {
+                alert("La entrega no se ha podido eliminar en la base de datos");
+            }
+        }
+    });
+} // Final función eliminar_entrega_bd(id)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name insertar_stock
+ * @description Función para insertar los stocks de la base de datos.
+ * @param producto valor del producto del menu stock
+ * @param unidades valor de la unidades del menu stock
+ */
+function insertar_stock(producto, unidades) {
+    $producto = producto;
+    $unidades = unidades;
+
+    $.ajax({
+        type: 'POST',
+        url: 'PHP/stock/insertar.php',
+        data: ('producto=' + $producto + '&amp;unidades=' + $unidades),
+        success: function (respuesta) {
+            if (respuesta == 1) {
+                alert("El producto " + $producto + " se ha insertado correctamente en la base de datos");
+            } else {
+                alert("El producto no se ha podido insertar en la base de datos");
+            }
+        }
+    });
+} // Final función insertar_stock(producto, stock)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name modificar_stock_bd
+ * @description Función para modificar los valores de los stocks de la base de datos.
+ * @param producto valor del producto del menu stock
+ * @param unidades valor de las unidades del menu stock
+ */
+function modificar_stock_bd(producto, unidades) {
+    $producto = producto;
+    $unidades = unidades;
+
+    $.ajax({
+        type: 'POST',
+        url: 'PHP/stock/modificar.php',
+        data: ('producto=' + $producto + '&amp;unidades=' + $unidades),
+        success: function (respuesta) {
+            if (respuesta == 1) {
+                alert("El producto " + $producto + " se ha actualizado correctamente en la base de datos");
+            } else {
+                alert("El producto no se ha podido actualizar en la base de datos");
+            }
+        }
+    });
+} // Final función modificar_stock_bd(producto, unidades)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name eliminar_stock_bd
+ * @description Función para eliminar los valores de los stocks de la base de datos.
+ * @param producto valor del producto del menu stock
+ */
+function eliminar_stock_bd(producto) {
+    $producto = producto;
+
+    $.ajax({
+        type: 'POST',
+        url: 'PHP/stock/eliminar.php',
+        data: ('producto=' + $producto),
+        success: function (respuesta) {
+            if (respuesta == 1) {
+                alert("El producto " + $producto + " se ha eliminado correctamente en la base de datos");
+            } else {
+                alert("El producto no se ha podido eliminar en la base de datos");
+            }
+        }
+    });
+} // Final función eliminar_stock_bd(producto)</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#ajax_entrega">ajax_entrega</a></li><li><a href="global.html#ajax_iniciar_aplicacion">ajax_iniciar_aplicacion</a></li><li><a href="global.html#ajax_login">ajax_login</a></li><li><a href="global.html#ajax_producto">ajax_producto</a></li><li><a href="global.html#ajax_stock">ajax_stock</a></li><li><a href="global.html#crear_productos">crear_productos</a></li><li><a href="global.html#crear_stock">crear_stock</a></li><li><a href="global.html#eliminar_entrega">eliminar_entrega</a></li><li><a href="global.html#eliminar_entrega_bd">eliminar_entrega_bd</a></li><li><a href="global.html#eliminar_login">eliminar_login</a></li><li><a href="global.html#eliminar_login_bd">eliminar_login_bd</a></li><li><a href="global.html#eliminar_producto_bd">eliminar_producto_bd</a></li><li><a href="global.html#eliminar_productos">eliminar_productos</a></li><li><a href="global.html#eliminar_stock">eliminar_stock</a></li><li><a href="global.html#eliminar_stock_bd">eliminar_stock_bd</a></li><li><a href="global.html#guardar_cambios_entrega">guardar_cambios_entrega</a></li><li><a href="global.html#guardar_cambios_login">guardar_cambios_login</a></li><li><a href="global.html#guardar_cambios_productos">guardar_cambios_productos</a></li><li><a href="global.html#guardar_cambios_stock">guardar_cambios_stock</a></li><li><a href="global.html#iniciar_aplicacion">iniciar_aplicacion</a></li><li><a href="global.html#insertar_entrega">insertar_entrega</a></li><li><a href="global.html#insertar_login">insertar_login</a></li><li><a href="global.html#insertar_producto">insertar_producto</a></li><li><a href="global.html#insertar_stock">insertar_stock</a></li><li><a href="global.html#listar_entrega_bd">listar_entrega_bd</a></li><li><a href="global.html#listar_login_bd">listar_login_bd</a></li><li><a href="global.html#listar_productos">listar_productos</a></li><li><a href="global.html#listar_productos_bd">listar_productos_bd</a></li><li><a href="global.html#listar_stock">listar_stock</a></li><li><a href="global.html#listar_stock_bd">listar_stock_bd</a></li><li><a href="global.html#menu_compra">menu_compra</a></li><li><a href="global.html#menu_entrega">menu_entrega</a></li><li><a href="global.html#menu_login">menu_login</a></li><li><a href="global.html#menu_stock">menu_stock</a></li><li><a href="global.html#modificar_entrega">modificar_entrega</a></li><li><a href="global.html#modificar_entrega_bd">modificar_entrega_bd</a></li><li><a href="global.html#modificar_login">modificar_login</a></li><li><a href="global.html#modificar_login_bd">modificar_login_bd</a></li><li><a href="global.html#modificar_producto_bd">modificar_producto_bd</a></li><li><a href="global.html#modificar_productos">modificar_productos</a></li><li><a href="global.html#modificar_stock">modificar_stock</a></li><li><a href="global.html#modificar_stock_bd">modificar_stock_bd</a></li><li><a href="global.html#select_compra">select_compra</a></li><li><a href="global.html#select_stock">select_stock</a></li><li><a href="global.html#submit_compra">submit_compra</a></li><li><a href="global.html#submit_entrega">submit_entrega</a></li><li><a href="global.html#submit_entrega_bd">submit_entrega_bd</a></li><li><a href="global.html#submit_login">submit_login</a></li><li><a href="global.html#submit_login_bd">submit_login_bd</a></li><li><a href="global.html#submit_stock">submit_stock</a></li><li><a href="global.html#validar_entrega">validar_entrega</a></li><li><a href="global.html#validar_login">validar_login</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun May 19 2019 16:56:35 GMT+0200 (GMT+02:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
