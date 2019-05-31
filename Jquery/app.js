@@ -25,7 +25,7 @@ var entrega_array = [];
 var cnt2 = -1;
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name menu_login
  * @description Función para mostrar el contenido del menu login y ocultar el resto de contendio de otros menus.
@@ -39,7 +39,7 @@ function menu_login() {
 }
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name menu_compra
  * @description Función para mostrar el contenido del menu productos y ocultar el resto de contendio de otros menus.
@@ -53,7 +53,7 @@ function menu_compra() {
 }
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name menu_entrega
  * @description Función para mostrar el contenido del menu entrega y ocultar el resto de contendio de otros menus.
@@ -67,7 +67,7 @@ function menu_entrega() {
 }
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name menu_stock
  * @description Función para mostrar el contenido del menu stock y ocultar el resto de contendio de otros menus.
@@ -81,7 +81,7 @@ function menu_stock() {
 }
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name validar_login
  * @description Función para validar los campos del menu login.
@@ -132,7 +132,7 @@ function validar_login() {
 } //Final función validar_login()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name submit_login
  * @description Función para mostrar los valores de los campos del menu login en console.log.
@@ -207,7 +207,7 @@ function submit_login() {
 } //Final función submit_login()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name submit_login_bd
  * @description Función para mostrar los valores de los campos del menu login de la base de datos.
@@ -270,7 +270,7 @@ function submit_login_bd($cnt_bd, $email_bd, $password_bd) {
 } //Final función submit_login_bd($cnt_bd, $email_bd, $password_bd)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name modificar_login
  * @description Función para modificar los valores del formulario seleccionado del menu login.
@@ -295,7 +295,7 @@ function modificar_login(value) {
 } //Final función modificar_login(value)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name guardar_cambios_login
  * @description Función para guardar los cambios valores del formulario seleccionado del menu login.
@@ -325,7 +325,7 @@ function guardar_cambios_login(value) {
 } //Final función guardar_cambios_login(value)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name eliminar_login
  * @description Función para eliminar los valores del formulario seleccionado del menu login.
@@ -345,7 +345,7 @@ function eliminar_login(value) {
 } //Final función eliminar_login(value)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name select_compra
  * @description Función para validar el campo select del menu productos.
@@ -370,7 +370,7 @@ function select_compra() {
 } //Final función select_compra()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name submit_compra
  * @description Función para mostrar los valores de los campos del menu productos en console.log.
@@ -392,7 +392,7 @@ function submit_compra() {
 } //Final función submit_compra()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name crear_productos
  * @description Función para crear valores para el select option del formulario productos.
@@ -426,7 +426,7 @@ function crear_productos() {
 } //Final función crear_productos()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name modificar_productos
  * @description Función para modificar los campos del formulario productos.
@@ -450,7 +450,7 @@ function modificar_productos() {
 } //Final función modificar_productos()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name guardar_cambios_productos
  * @description Función para guardar los cambios de los campos del formulario productos.
@@ -474,25 +474,37 @@ function guardar_cambios_productos() {
     /*Para modificar los valores del select que haya seleccionado el usuario*/
     $precio_value = $('.compra-precio').val();
     $producto_value = $("#select-producto option:selected").text();
-    $("#select-producto option[value=" + $producto + "]").remove();
-    $("#select-producto").append(new Option($producto_value, $precio_value));
 
-    /*Para reiniciar el select*/
-    $('#select-producto').prop('selectedIndex', 0);
+    /*Condición de que si el campo del precio del menu productos esta vacio no deje crear un nuevo producto*/
+    if ($precio_value != "") {
+        $("#select-producto option[value=" + $producto + "]").remove();
+        $("#select-producto").append(new Option($producto_value, $precio_value));
 
-    /*Para eliminar el valor que contiene el input compra-precio del formulario productos.*/
-    $('.compra-precio').val("");
+        /*Para reiniciar el select*/
+        $('#select-producto').prop('selectedIndex', 0);
 
-    /*Llamar a la funcion listar_productos() para mostrar los productos automaticamente*/
-    listar_productos()
+        /*Para eliminar el valor que contiene el input compra-precio del formulario productos.*/
+        $('.compra-precio').val("");
 
-    /*Llamar a la funcion modificar_producto_bd() para guardar los cambios en la base de datos.*/
-    modificar_producto_bd($producto_value, $precio_value)
+        /*Llamar a la funcion listar_productos() para mostrar los productos automaticamente*/
+        listar_productos()
+
+        /*Llamar a la funcion modificar_producto_bd() para guardar los cambios en la base de datos.*/
+        modificar_producto_bd($producto_value, $precio_value)
+    } else {
+        alert("No se puede dejar el campo vacio");
+
+        /*Para reiniciar el select*/
+        $('#select-producto').prop('selectedIndex', 0);
+
+        /*Para eliminar el valor que contiene el input compra-precio del formulario productos.*/
+        $('.compra-precio').val("");
+    } // if $precio_value != ""
 
 } //Final función guardar_cambios_productos()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name eliminar_productos
  * @description Función para eliminar el campo seleccionado del formulario productos.
@@ -525,7 +537,7 @@ function eliminar_productos() {
 } //Final función eliminar_productos()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name listar_productos
  * @description Función para mostrar los valores del formulario productos.
@@ -595,7 +607,7 @@ function listar_productos() {
 } //Función listar_productos()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name validar_entrega
  * @description Función para validar los campos del menu entrega.
@@ -669,7 +681,7 @@ function validar_entrega() {
 } //Final función validar_entrega()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name submit_entrega
  * @description Función para mostrar los valores de los campos del menu entrega en console.log.
@@ -749,7 +761,7 @@ function submit_entrega() {
 } //Final función submit_entrega()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name submit_entrega_bd
  * @description Función para mostrar los valores de los campos del menu entrega de la base de datos.
@@ -816,7 +828,7 @@ function submit_entrega_bd($cnt2_bd, $telefono_bd, $fecha_inicio_bd, $fecha_fina
 } //Final función submit_entrega_bd($cnt2_bd, $telefono_bd, $fecha_inicio_bd, $fecha_final_bd)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name modificar_entrega
  * @description Función para modificar los valores del formulario seleccionado del menu entrega.
@@ -842,7 +854,7 @@ function modificar_entrega(value) {
 } //Final función modificar_entrega(value)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name guardar_cambios_entrega
  * @description Función para guardar los cambios valores del formulario seleccionado del menu entrega.
@@ -873,7 +885,7 @@ function guardar_cambios_entrega(value) {
 } //Final función guardar_cambios_entrega(value)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name eliminar_entrega
  * @description Función para eliminar los valores del formulario seleccionado del menu entrega.
@@ -893,7 +905,7 @@ function eliminar_entrega(value) {
 } //Final función eliminar_login(value)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name select_stock
  * @description Función para validar el campo select del menu stock.
@@ -918,7 +930,7 @@ function select_stock() {
 } //Final función select_stock()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name submit_stock
  * @description Función para mostrar los valores de los campos del menu stock en console.log.
@@ -940,7 +952,7 @@ function submit_stock() {
 } //Final función submit_stock()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name crear_stock
  * @description Función para crear valores para el select option del formulario stock.
@@ -975,7 +987,7 @@ function crear_stock() {
 } //Final función crear_productos()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name modificar_stock
  * @description Función para modificar los campos del formulario stock.
@@ -999,7 +1011,7 @@ function modificar_stock() {
 } //Final función modificar_stock()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name guardar_cambios_stock
  * @description Función para guardar los cambios de los campos del formulario stock.
@@ -1023,25 +1035,38 @@ function guardar_cambios_stock() {
     /*Para modificar los valores del select que haya seleccionado el usuario*/
     $unidades_stock_value = $('.stock-unidades').val();
     $producto_stock_value = $("#select-stock-producto option:selected").text();
-    $("#select-stock-producto option[value=" + $producto + "]").remove();
-    $("#select-stock-producto").append(new Option($producto_stock_value, $unidades_stock_value));
 
-    /*Para reiniciar el select*/
-    $('#select-stock-producto').prop('selectedIndex', 0);
+    /*Condición de que si el campo del precio del menu productos esta vacio no deje crear un nuevo producto*/
+    if ($unidades_stock_value != "") {
+        $("#select-stock-producto option[value=" + $producto + "]").remove();
+        $("#select-stock-producto").append(new Option($producto_stock_value, $unidades_stock_value));
 
-    /*Para eliminar el valor que contiene el input compra-precio del formulario stock.*/
-    $('.stock-unidades').val("");
+        /*Para reiniciar el select*/
+        $('#select-stock-producto').prop('selectedIndex', 0);
 
-    /*Llamar a la funcion listar_stock() para mostrar los productos automaticamente*/
-    listar_stock()
+        /*Para eliminar el valor que contiene el input compra-precio del formulario stock.*/
+        $('.stock-unidades').val("");
 
-    /*Llamar a la funcion modificar_stock_bd() para guardar los cambios en la base de datos.*/
-    modificar_stock_bd($producto_stock_value, $unidades_stock_value)
+        /*Llamar a la funcion listar_stock() para mostrar los productos automaticamente*/
+        listar_stock()
+
+        /*Llamar a la funcion modificar_stock_bd() para guardar los cambios en la base de datos.*/
+        modificar_stock_bd($producto_stock_value, $unidades_stock_value)
+    } else {
+        alert("No se puede dejar el campo vacio");
+
+        /*Para reiniciar el select*/
+        $('#select-stock-producto').prop('selectedIndex', 0);
+
+        /*Para eliminar el valor que contiene el input compra-precio del formulario stock.*/
+        $('.stock-unidades').val("");
+
+    } // if $unidades_stock_value != ""
 
 } //Final función guardar_cambios_stock()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name eliminar_stock
  * @description Función para eliminar el campo seleccionado del formulario stock.
@@ -1073,7 +1098,7 @@ function eliminar_stock() {
 } //Final función eliminar_stock()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name listar_stock
  * @description Función para mostrar los valores del formulario stock.

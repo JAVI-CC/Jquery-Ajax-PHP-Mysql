@@ -502,20 +502,32 @@ function guardar_cambios_productos() {
     /*Para modificar los valores del select que haya seleccionado el usuario*/
     $precio_value = $('.compra-precio').val();
     $producto_value = $("#select-producto option:selected").text();
-    $("#select-producto option[value=" + $producto + "]").remove();
-    $("#select-producto").append(new Option($producto_value, $precio_value));
 
-    /*Para reiniciar el select*/
-    $('#select-producto').prop('selectedIndex', 0);
+    /*Condición de que si el campo del precio del menu productos esta vacio no deje crear un nuevo producto*/
+    if ($precio_value != "") {
+        $("#select-producto option[value=" + $producto + "]").remove();
+        $("#select-producto").append(new Option($producto_value, $precio_value));
 
-    /*Para eliminar el valor que contiene el input compra-precio del formulario productos.*/
-    $('.compra-precio').val("");
+        /*Para reiniciar el select*/
+        $('#select-producto').prop('selectedIndex', 0);
 
-    /*Llamar a la funcion listar_productos() para mostrar los productos automaticamente*/
-    listar_productos()
+        /*Para eliminar el valor que contiene el input compra-precio del formulario productos.*/
+        $('.compra-precio').val("");
 
-    /*Llamar a la funcion modificar_producto_bd() para guardar los cambios en la base de datos.*/
-    modificar_producto_bd($producto_value, $precio_value)
+        /*Llamar a la funcion listar_productos() para mostrar los productos automaticamente*/
+        listar_productos()
+
+        /*Llamar a la funcion modificar_producto_bd() para guardar los cambios en la base de datos.*/
+        modificar_producto_bd($producto_value, $precio_value)
+    } else {
+        alert("No se puede dejar el campo vacio");
+
+        /*Para reiniciar el select*/
+        $('#select-producto').prop('selectedIndex', 0);
+
+        /*Para eliminar el valor que contiene el input compra-precio del formulario productos.*/
+        $('.compra-precio').val("");
+    } // if $precio_value != ""
 
 } //Final función guardar_cambios_productos()
 
@@ -609,16 +621,16 @@ function listar_productos() {
             $('#duplicar-productos' + cnt3 + ' .mostrar-precio-0').val($("select#select-producto").prop('selectedIndex', x).val())
             $('#duplicar-productos' + cnt3).addClass("content_3");
 
-            /*Para desactivar el botón listar productos*/
-            $(".boton-listar-productos").attr('disabled', true);
-            $(".boton-crear-productos").attr('disabled', false);
-
-            /*Para reiniciar el select*/
-            $('#select-producto').prop('selectedIndex', 0);
-
         } //Final if x == 0 
 
     } //Final bucle for
+
+    /*Para desactivar el botón listar productos*/
+    $(".boton-listar-productos").attr('disabled', true);
+    $(".boton-crear-productos").attr('disabled', false);
+
+    /*Para reiniciar el select*/
+    $('#select-producto').prop('selectedIndex', 0);
 
 } //Función listar_productos()
 
@@ -1051,20 +1063,33 @@ function guardar_cambios_stock() {
     /*Para modificar los valores del select que haya seleccionado el usuario*/
     $unidades_stock_value = $('.stock-unidades').val();
     $producto_stock_value = $("#select-stock-producto option:selected").text();
-    $("#select-stock-producto option[value=" + $producto + "]").remove();
-    $("#select-stock-producto").append(new Option($producto_stock_value, $unidades_stock_value));
 
-    /*Para reiniciar el select*/
-    $('#select-stock-producto').prop('selectedIndex', 0);
+    /*Condición de que si el campo del precio del menu productos esta vacio no deje crear un nuevo producto*/
+    if ($unidades_stock_value != "") {
+        $("#select-stock-producto option[value=" + $producto + "]").remove();
+        $("#select-stock-producto").append(new Option($producto_stock_value, $unidades_stock_value));
 
-    /*Para eliminar el valor que contiene el input compra-precio del formulario stock.*/
-    $('.stock-unidades').val("");
+        /*Para reiniciar el select*/
+        $('#select-stock-producto').prop('selectedIndex', 0);
 
-    /*Llamar a la funcion listar_stock() para mostrar los productos automaticamente*/
-    listar_stock()
+        /*Para eliminar el valor que contiene el input compra-precio del formulario stock.*/
+        $('.stock-unidades').val("");
 
-    /*Llamar a la funcion modificar_stock_bd() para guardar los cambios en la base de datos.*/
-    modificar_stock_bd($producto_stock_value, $unidades_stock_value)
+        /*Llamar a la funcion listar_stock() para mostrar los productos automaticamente*/
+        listar_stock()
+
+        /*Llamar a la funcion modificar_stock_bd() para guardar los cambios en la base de datos.*/
+        modificar_stock_bd($producto_stock_value, $unidades_stock_value)
+    } else {
+        alert("No se puede dejar el campo vacio");
+
+        /*Para reiniciar el select*/
+        $('#select-stock-producto').prop('selectedIndex', 0);
+
+        /*Para eliminar el valor que contiene el input compra-precio del formulario stock.*/
+        $('.stock-unidades').val("");
+
+    } // if $unidades_stock_value != ""
 
 } //Final función guardar_cambios_stock()
 
@@ -1156,16 +1181,16 @@ function listar_stock() {
             $('#duplicar-stock' + cnt4 + ' .mostrar-unidades-0').val($("select#select-stock-producto").prop('selectedIndex', x).val())
             $('#duplicar-stock' + cnt4).addClass("content_4");
 
-            /*Para desactivar el botón listar stock*/
-            $(".boton-listar-stock").attr('disabled', true);
-            $(".boton-crear-stock").attr('disabled', false);
-
-            /*Para reiniciar el select*/
-            $('#select-stock-producto').prop('selectedIndex', 0);
-
         } //Final if x == 0 
 
     } //Final bucle for
+
+    /*Para desactivar el botón listar stock*/
+    $(".boton-listar-stock").attr('disabled', true);
+    $(".boton-crear-stock").attr('disabled', false);
+
+    /*Para reiniciar el select*/
+    $('#select-stock-producto').prop('selectedIndex', 0);
 
 } //Función listar_productos()
 
@@ -1327,7 +1352,7 @@ $(".boton-listar-stock").click(function () {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun May 19 2019 16:56:36 GMT+0200 (GMT+02:00)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon May 20 2019 20:57:01 GMT+0200 (GMT+02:00)
 </footer>
 
 <script> prettyPrint(); </script>

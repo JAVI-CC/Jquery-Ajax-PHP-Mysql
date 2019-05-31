@@ -1,5 +1,5 @@
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name iniciar_aplicacion
  * @description Función para iniciar la aplicacion con los permisos correspondientes del usuario.
@@ -99,7 +99,7 @@ function iniciar_aplicacion(email, password) {
 } // Final función iniciar_aplicacion(email, password)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name ajax_iniciar_aplicacion
  * @description Función para obtener los valores de los usuarios de la base de datos de la tabla login al iniciar la pagina.
@@ -115,7 +115,7 @@ function ajax_iniciar_aplicacion(url, data) {
 } // Final función ajax_iniciar_aplicacion(url, data)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name listar_login_bd
  * @description Función para listar los usuarios de la base de datos al iniciar la pagina.
@@ -126,7 +126,7 @@ function listar_login_bd() {
         .done(function (info) {
 
             /*Condicion de que si la respuesta no hay datos en la tabla de base de datos no muestre ningun error*/
-            if (info != null) {
+            if (info.includes("null") != true) {
 
                 var $login = JSON.parse(info);
 
@@ -144,7 +144,7 @@ function listar_login_bd() {
 } // Final función listar_login_bd()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name ajax_login
  * @description Función para obtener los valores de los usuarios de la base de datos al iniciar la pagina.
@@ -160,7 +160,7 @@ function ajax_login(url, data) {
 } // Final función ajax_login(url, data)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name listar_productos_bd
  * @description Función para listar los productos de la base de datos al iniciar la pagina.
@@ -169,9 +169,9 @@ function ajax_login(url, data) {
 function listar_productos_bd() {
     ajax_producto("PHP/productos/listar.php", "")
         .done(function (info) {
-
+            
             /*Condicion de que si la respuesta no hay datos en la tabla de base de datos no muestre ningun error*/
-            if (info != null) {
+            if (info.includes("null") != true) {
 
                 var $productos = JSON.parse(info);
 
@@ -192,7 +192,7 @@ function listar_productos_bd() {
 } // Final función listar_productos_bd()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name ajax_producto
  * @description Función para obtener los valores de los productos de la base de datos al iniciar la pagina.
@@ -208,7 +208,7 @@ function ajax_producto(url, data) {
 } // Final función ajax_producto(url, data)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name listar_entrega_bd
  * @description Función para listar las entregas de la base de datos al iniciar la pagina.
@@ -219,7 +219,7 @@ function listar_entrega_bd() {
         .done(function (info) {
 
             /*Condicion de que si la respuesta no hay datos en la tabla de base de datos no muestre ningun error*/
-            if (info != null) {
+            if (info.includes("null") != true) {
 
                 var $entrega = JSON.parse(info);
 
@@ -238,7 +238,7 @@ function listar_entrega_bd() {
 } // Final función listar_entrega_bd()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name ajax_entrega
  * @description Función para obtener los valores de las entregas de la base de datos al iniciar la pagina.
@@ -254,7 +254,7 @@ function ajax_entrega(url, data) {
 } // Final función ajax_entrega(url, data)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name listar_stock_bd
  * @description Función para listar los stocks de la base de datos al iniciar la pagina.
@@ -265,7 +265,7 @@ function listar_stock_bd() {
         .done(function (info) {
 
             /*Condicion de que si la respuesta no hay datos en la tabla de base de datos no muestre ningun error*/
-            if (info != null) {
+            if (info.includes("null") != true) {
 
                 var $stock = JSON.parse(info);
 
@@ -286,7 +286,7 @@ function listar_stock_bd() {
 } // Final función listar_stock_bd()
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name ajax_stock
  * @description Función para obtener los valores de los stocks de la base de datos al iniciar la pagina.
@@ -302,7 +302,7 @@ function ajax_stock(url, data) {
 } // Final función ajax_stock(url, data)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name insertar_login
  * @description Función para insertar los usuarios de la base de datos.
@@ -330,7 +330,7 @@ function insertar_login(id, email, password) {
 } // Final función insertar_login(id, email, password)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name modificar_login_bd
  * @description Función para modificar los valores de los usuarios de la base de datos.
@@ -357,7 +357,7 @@ function modificar_login_bd(id, email, password) {
 } // Final función modificar_login_bd(id, email, password)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name eliminar_login_bd
  * @description Función para eliminar los valores de los usuarios de la base de datos.
@@ -381,7 +381,7 @@ function eliminar_login_bd(id) {
 } // Final función eliminar_login_bd(id)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name insertar_producto
  * @description Función para insertar los productos de la base de datos.
@@ -407,7 +407,7 @@ function insertar_producto(producto, precio) {
 } // Final función insertar_producto(producto, precio)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name modificar_producto_bd
  * @description Función para modificar los valores de los productos de la base de datos.
@@ -433,7 +433,7 @@ function modificar_producto_bd(producto, precio) {
 } // Final función modificar_producto_bd(producto, precio)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name eliminar_producto_bd
  * @description Función para eliminar los valores de los productos de la base de datos.
@@ -457,7 +457,7 @@ function eliminar_producto_bd(producto) {
 } // Final función eliminar_producto_bd(producto)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name insertar_entrega
  * @description Función para insertar las entregas de la base de datos.
@@ -487,7 +487,7 @@ function insertar_entrega(id, telefono, fecha_inicio, fecha_final) {
 } // Final función insertar_entrega(id, telefono, fecha_inicio, fecha_final)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name modificar_entrega_bd
  * @description Función para modificar los valores de las entregas de la base de datos.
@@ -516,7 +516,7 @@ function modificar_entrega_bd(id, telefono, fecha_inicio, fecha_final) {
 } // Final función modificar_entrega_bd(id, telefono, fecha_inicio, fecha_final)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name eliminar_entrega_bd
  * @description Función para eliminar los valores de las entregas de la base de datos.
@@ -540,7 +540,7 @@ function eliminar_entrega_bd(id) {
 } // Final función eliminar_entrega_bd(id)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name insertar_stock
  * @description Función para insertar los stocks de la base de datos.
@@ -566,7 +566,7 @@ function insertar_stock(producto, unidades) {
 } // Final función insertar_stock(producto, stock)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name modificar_stock_bd
  * @description Función para modificar los valores de los stocks de la base de datos.
@@ -592,7 +592,7 @@ function modificar_stock_bd(producto, unidades) {
 } // Final función modificar_stock_bd(producto, unidades)
 
 /**
- * @author Javier Legaz
+ * @author javi98
  * @version 1.0
  * @name eliminar_stock_bd
  * @description Función para eliminar los valores de los stocks de la base de datos.

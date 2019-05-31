@@ -29,173 +29,6 @@
             <pre class="prettyprint source linenums"><code>/**
  * @author Javier Legaz
  * @version 1.0
- * @name listar_login_bd
- * @description Función para listar los usuarios de la base de datos al iniciar la pagina.
- * @param 
- */
-function listar_login_bd() {
-    ajax_login("PHP/usuarios/listar.php", "")
-        .done(function (info) {
-
-            var $login = JSON.parse(info);
-
-            for (var i in $login.data) {
-                var $email = $login.data[i].email;
-                var $password = $login.data[i].password;
-
-                /*Llamar a la funcion submit_login_bd(i, $email, $password) para mostrar los usuarios automaticamente*/
-                submit_login_bd(i, $email, $password)
-            }
-
-        });
-} // Final función listar_login_bd()
-
-/**
- * @author Javier Legaz
- * @version 1.0
- * @name ajax_login
- * @description Función para obtener los valores de los usuarios de la base de datos al iniciar la pagina.
- * @param 
- */
-function ajax_login(url, data) {
-    var ajax_login = $.ajax({
-        "method": "POST",
-        "url": url,
-        "data": data
-    })
-    return ajax_login;
-} // Final función ajax_login(url, data)
-
-/**
- * @author Javier Legaz
- * @version 1.0
- * @name listar_productos_bd
- * @description Función para listar los productos de la base de datos al iniciar la pagina.
- * @param 
- */
-function listar_productos_bd() {
-    ajax_producto("PHP/productos/listar.php", "")
-        .done(function (info) {
-
-            var $productos = JSON.parse(info);
-
-            for (var i in $productos.data) {
-                var $producto = $productos.data[i].producto;
-                var $precio = $productos.data[i].precio;
-
-                $("#select-producto").append(new Option($producto, $precio));
-
-            }
-
-            /*Llamar a la función listar_productos() para mostrar los productos por pantalla*/
-            listar_productos()
-
-        });
-} // Final función listar_productos_bd()
-
-/**
- * @author Javier Legaz
- * @version 1.0
- * @name ajax_producto
- * @description Función para obtener los valores de los productos de la base de datos al iniciar la pagina.
- * @param 
- */
-function ajax_producto(url, data) {
-    var ajax_producto = $.ajax({
-        "method": "POST",
-        "url": url,
-        "data": data
-    })
-    return ajax_producto;
-} // Final función ajax_producto(url, data)
-
-/**
- * @author Javier Legaz
- * @version 1.0
- * @name listar_entrega_bd
- * @description Función para listar las entregas de la base de datos al iniciar la pagina.
- * @param 
- */
-function listar_entrega_bd() {
-    ajax_producto("PHP/entrega/listar.php", "")
-        .done(function (info) {
-
-            var $entrega = JSON.parse(info);
-
-            for (var i in $entrega.data) {
-                var $telefono = $entrega.data[i].telefono;
-                var $fecha_inicio = $entrega.data[i].fecha_inicio;
-                var $fecha_final = $entrega.data[i].fecha_final;
-
-                /*Llamar a la funcion submit_entrega_bd(i, $telefono, $fecha_inicio, $fecha_final) para mostrar las entregas automaticamente*/
-                submit_entrega_bd(i, $telefono, $fecha_inicio, $fecha_final)
-            }
-
-        });
-} // Final función listar_entrega_bd()
-
-/**
- * @author Javier Legaz
- * @version 1.0
- * @name ajax_entrega
- * @description Función para obtener los valores de las entregas de la base de datos al iniciar la pagina.
- * @param 
- */
-function ajax_entrega(url, data) {
-    var ajax_entrega = $.ajax({
-        "method": "POST",
-        "url": url,
-        "data": data
-    })
-    return ajax_entrega;
-} // Final función ajax_entrega(url, data)
-
-/**
- * @author Javier Legaz
- * @version 1.0
- * @name listar_stock_bd
- * @description Función para listar los stocks de la base de datos al iniciar la pagina.
- * @param 
- */
-function listar_stock_bd() {
-    ajax_stock("PHP/stock/listar.php", "")
-        .done(function (info) {
-
-            var $stock = JSON.parse(info);
-
-            for (var i in $stock.data) {
-                var $producto = $stock.data[i].producto;
-                var $unidades = $stock.data[i].unidades;
-
-                $("#select-stock-producto").append(new Option($producto, $unidades));
-
-            }
-
-            /*Llamar a la función listar_stock() para mostrar los productos por pantalla*/
-            listar_stock()
-
-        });
-} // Final función listar_stock_bd()
-
-/**
- * @author Javier Legaz
- * @version 1.0
- * @name ajax_stock
- * @description Función para obtener los valores de los stocks de la base de datos al iniciar la pagina.
- * @param 
- */
-function ajax_stock(url, data) {
-    var ajax_stock = $.ajax({
-        "method": "POST",
-        "url": url,
-        "data": data
-    })
-    return ajax_stock;
-} // Final función ajax_stock(url, data)
-
-/**
- * @author Javier Legaz
- * @version 1.0
  * @name iniciar_aplicacion
  * @description Función para iniciar la aplicacion con los permisos correspondientes del usuario.
  * @param email valor del email del menu login.
@@ -267,7 +100,6 @@ function iniciar_aplicacion(email, password) {
                     $("#pagination-login").show();
                     $("#pagination_entrega").show();
                     $(".boton-iniciar-aplicacion").removeAttr("style").hide();
-                    alert("efsa");
                     $("#boton-cerrar-aplicacion").show();
                     $("#boton-cerrar-aplicacion").text("Cerrar sesión de la cuenta: " + $email);
 
@@ -309,6 +141,193 @@ function ajax_iniciar_aplicacion(url, data) {
     })
     return ajax_iniciar_aplicacion;
 } // Final función ajax_iniciar_aplicacion(url, data)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name listar_login_bd
+ * @description Función para listar los usuarios de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function listar_login_bd() {
+    ajax_login("PHP/usuarios/listar.php", "")
+        .done(function (info) {
+
+            /*Condicion de que si la respuesta no hay datos en la tabla de base de datos no muestre ningun error*/
+            if (info.includes("null") != true) {
+
+                var $login = JSON.parse(info);
+
+                for (var i in $login.data) {
+                    var $email = $login.data[i].email;
+                    var $password = $login.data[i].password;
+
+                    /*Llamar a la funcion submit_login_bd(i, $email, $password) para mostrar los usuarios automaticamente*/
+                    submit_login_bd(i, $email, $password)
+                }
+
+            }
+
+        });
+} // Final función listar_login_bd()
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name ajax_login
+ * @description Función para obtener los valores de los usuarios de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function ajax_login(url, data) {
+    var ajax_login = $.ajax({
+        "method": "POST",
+        "url": url,
+        "data": data
+    })
+    return ajax_login;
+} // Final función ajax_login(url, data)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name listar_productos_bd
+ * @description Función para listar los productos de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function listar_productos_bd() {
+    ajax_producto("PHP/productos/listar.php", "")
+        .done(function (info) {
+            
+            /*Condicion de que si la respuesta no hay datos en la tabla de base de datos no muestre ningun error*/
+            if (info.includes("null") != true) {
+
+                var $productos = JSON.parse(info);
+
+                for (var i in $productos.data) {
+                    var $producto = $productos.data[i].producto;
+                    var $precio = $productos.data[i].precio;
+
+                    $("#select-producto").append(new Option($producto, $precio));
+
+                }
+
+            }
+
+            /*Llamar a la función listar_productos() para mostrar los productos por pantalla*/
+            listar_productos()
+
+        });
+} // Final función listar_productos_bd()
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name ajax_producto
+ * @description Función para obtener los valores de los productos de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function ajax_producto(url, data) {
+    var ajax_producto = $.ajax({
+        "method": "POST",
+        "url": url,
+        "data": data
+    })
+    return ajax_producto;
+} // Final función ajax_producto(url, data)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name listar_entrega_bd
+ * @description Función para listar las entregas de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function listar_entrega_bd() {
+    ajax_producto("PHP/entrega/listar.php", "")
+        .done(function (info) {
+
+            /*Condicion de que si la respuesta no hay datos en la tabla de base de datos no muestre ningun error*/
+            if (info.includes("null") != true) {
+
+                var $entrega = JSON.parse(info);
+
+                for (var i in $entrega.data) {
+                    var $telefono = $entrega.data[i].telefono;
+                    var $fecha_inicio = $entrega.data[i].fecha_inicio;
+                    var $fecha_final = $entrega.data[i].fecha_final;
+
+                    /*Llamar a la funcion submit_entrega_bd(i, $telefono, $fecha_inicio, $fecha_final) para mostrar las entregas automaticamente*/
+                    submit_entrega_bd(i, $telefono, $fecha_inicio, $fecha_final)
+                }
+
+            }
+
+        });
+} // Final función listar_entrega_bd()
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name ajax_entrega
+ * @description Función para obtener los valores de las entregas de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function ajax_entrega(url, data) {
+    var ajax_entrega = $.ajax({
+        "method": "POST",
+        "url": url,
+        "data": data
+    })
+    return ajax_entrega;
+} // Final función ajax_entrega(url, data)
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name listar_stock_bd
+ * @description Función para listar los stocks de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function listar_stock_bd() {
+    ajax_stock("PHP/stock/listar.php", "")
+        .done(function (info) {
+
+            /*Condicion de que si la respuesta no hay datos en la tabla de base de datos no muestre ningun error*/
+            if (info.includes("null") != true) {
+
+                var $stock = JSON.parse(info);
+
+                for (var i in $stock.data) {
+                    var $producto = $stock.data[i].producto;
+                    var $unidades = $stock.data[i].unidades;
+
+                    $("#select-stock-producto").append(new Option($producto, $unidades));
+
+                }
+
+            }
+
+            /*Llamar a la función listar_stock() para mostrar los productos por pantalla*/
+            listar_stock()
+
+        });
+} // Final función listar_stock_bd()
+
+/**
+ * @author Javier Legaz
+ * @version 1.0
+ * @name ajax_stock
+ * @description Función para obtener los valores de los stocks de la base de datos al iniciar la pagina.
+ * @param 
+ */
+function ajax_stock(url, data) {
+    var ajax_stock = $.ajax({
+        "method": "POST",
+        "url": url,
+        "data": data
+    })
+    return ajax_stock;
+} // Final función ajax_stock(url, data)
 
 /**
  * @author Javier Legaz
@@ -638,7 +657,7 @@ function eliminar_stock_bd(producto) {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun May 19 2019 16:56:35 GMT+0200 (GMT+02:00)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon May 20 2019 20:57:00 GMT+0200 (GMT+02:00)
 </footer>
 
 <script> prettyPrint(); </script>
