@@ -1,5 +1,5 @@
 <?php
 
-$conexion=mysqli_connect('localhost','root','12345678','calderas');
+$conexion=mysqli_connect('localhost','admin','12345678','calderas');
 
 ?>

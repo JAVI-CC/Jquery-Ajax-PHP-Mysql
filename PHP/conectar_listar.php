@@ -3,7 +3,7 @@
 class Conexion{
     private $host = "localhost";
     private $dbname = "calderas";
-    private $user = "root";
+    private $user = "admin";
     private $password = "12345678";
     private $conexion = null;
     public function getConexion(){
