@@ -2,11 +2,11 @@
 
 <p align="center"><img src="/Images/start.png"></p>
 
-<p>Show Tasks:</p>
-<p align="center"><img src="/images/Captura1.PNG"></p>
+<p>Login:</p>
+<p align="center"><img src="/Images/Captura1.PNG"></p>
 
 </br>
 
-<p>Edit Task:</p>
-<p align="center"><img src="/images/Captura2.PNG"></p>
+<p>Edit Product:</p>
+<p align="center"><img src="/Images/Captura3.PNG"></p>
 
